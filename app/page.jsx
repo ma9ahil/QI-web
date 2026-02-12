@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Rocket, Code, Layers, Zap, Activity, Cpu, Globe, ArrowRight } from 'lucide-react';
+import { Menu, X, Rocket, Code, Layers, Zap, Activity, Cpu, Globe, CheckCircle } from 'lucide-react';
 
 const QuantumIgnitionsSite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,7 +50,7 @@ const QuantumIgnitionsSite = () => {
           <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => window.scrollTo(0,0)}>
             <div className="relative">
               <div className="absolute inset-0 bg-blue-500 blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
-              {/* <img src="/logo.webp" alt="Logo" className="relative h-8 md:h-9 w-auto object-contain" /> */}
+              <img src="/logo.webp" alt="Logo" className="relative h-8 md:h-9 w-auto object-contain" />
             </div>
             <span className="font-bold text-base md:text-lg tracking-tighter text-white">
               QUANTUM <span className="text-cyan-400">IGNITIONS</span>
@@ -82,7 +82,7 @@ const QuantumIgnitionsSite = () => {
           </button>
         </div>
 
-        {/* Mobile Menu Dropdown (Full Width) */}
+        {/* Mobile Menu Dropdown */}
         <div className={`md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-white/10 shadow-2xl transition-all duration-300 origin-top overflow-hidden ${isMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
           <div className="flex flex-col py-4 px-4 space-y-2">
              {navLinks.map((link) => (
@@ -109,7 +109,7 @@ const QuantumIgnitionsSite = () => {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-32 overflow-hidden min-h-[90dvh] flex flex-col justify-center">
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden min-h-[85dvh] flex flex-col justify-center">
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 text-center">
           
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-6 md:mb-8 hover:bg-blue-500/20 transition-colors cursor-default">
@@ -136,6 +136,51 @@ const QuantumIgnitionsSite = () => {
                 Launch Project <Rocket size={20} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* --- ABOUT SECTION --- */}
+      <section id="about" className="py-16 md:py-24 bg-slate-900 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="mb-10 lg:mb-0">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Who We Are</h2>
+              <div className="h-1 w-20 bg-blue-500 mb-8 rounded-full"></div>
+              <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                We are a <span className="text-white font-semibold">UK-based</span> team of tech enthusiasts, developers, and designers passionate about bringing ideas to life. We specialize in transforming concepts into functional products, helping you test, validate, and launch your vision quickly.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Fast MVP Development",
+                  "Custom Digital Solutions",
+                  "End-to-End Product Support"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-slate-200">
+                    <CheckCircle className="text-blue-400 flex-shrink-0" size={20} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-400 rounded-2xl transform rotate-3 opacity-10"></div>
+              <div className="relative bg-slate-800/50 border border-white/5 p-8 rounded-2xl shadow-2xl backdrop-blur-sm">
+                <div className="flex items-center gap-4 mb-4">
+                   <div className="p-3 bg-blue-500/20 rounded-full text-blue-400">
+                      <Globe size={24} />
+                   </div>
+                   <div>
+                      <h4 className="text-white font-bold">Global Standards, UK Roots</h4>
+                      <p className="text-slate-400 text-sm">London • Manchester • Remote</p>
+                   </div>
+                </div>
+                <p className="text-xl font-light text-slate-300 italic">
+                  "No matter your industry or idea, we provide the expertise and tools to turn it into a working MVP or digital solution."
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -197,7 +242,7 @@ const QuantumIgnitionsSite = () => {
         </div>
       </section>
 
-      {/* --- CONTACT --- */}
+      {/* --- CONTACT WITH FORMSUBMIT --- */}
       <section id="contact" className="py-16 md:py-24 relative">
          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-600/10 blur-[60px] md:blur-[100px] rounded-full pointer-events-none"></div>
 
@@ -208,14 +253,23 @@ const QuantumIgnitionsSite = () => {
               <p className="text-slate-400 mt-2 text-sm md:text-base">Fill out the form and we'll get back to you within 24 hours.</p>
             </div>
 
-            <form className="space-y-4 md:space-y-6">
+            {/* Form Configuration */}
+            <form 
+              action="https://formsubmit.co/manahilsupwork@gmail.com" 
+              method="POST"
+              className="space-y-4 md:space-y-6"
+            >
+              {/* Optional: Configuration for FormSubmit */}
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_subject" value="New Inquiry from Quantum Ignitions Website" />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <input type="text" placeholder="Name" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base" />
-                <input type="email" placeholder="Email" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base" />
+                <input type="text" name="name" required placeholder="Name" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base" />
+                <input type="email" name="email" required placeholder="Email" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base" />
               </div>
-              <textarea rows={4} placeholder="Tell us about your project..." className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base"></textarea>
+              <textarea name="message" required rows={4} placeholder="Tell us about your project..." className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:py-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base"></textarea>
               
-              <button className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-shadow text-base md:text-lg">
+              <button type="submit" className="w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-shadow text-base md:text-lg">
                 Send Message
               </button>
             </form>
