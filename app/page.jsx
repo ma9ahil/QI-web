@@ -155,8 +155,9 @@ const QuantumIgnitionsSite = () => {
           </h1>
 
           <p className="mt-4 max-w-2xl mx-auto text-base md:text-xl text-slate-400 leading-relaxed mb-8 md:mb-10 px-4">
-            We help innovators build high-quality MVPs and digital products. 
-            <span className="text-white block md:inline"> From concept to launch, instantly.</span>
+            We help innovators build high-quality MVPs and digital products.
+              <br/>
+            <span className="text-white block md:inline">From concept to launch, instantly.</span>
           </p>
 
           <div className="flex justify-center px-4">
@@ -242,12 +243,12 @@ const QuantumIgnitionsSite = () => {
             </div>
             <div className="w-full md:w-2/3 grid gap-4 md:gap-6">
               {[
-                { step: "01", title: "Discovery", desc: "We adhere to your vision and map out the technical path." },
-                { step: "02", title: "Development", desc: "Sprints, rapid updates, and constant feedback loops." },
-                { step: "03", title: "Launch", desc: "Deployment, testing, and handover for scale." }
+                { step: "1", title: "Discovery", desc: "We adhere to your vision and map out the technical path." },
+                { step: "2", title: "Development", desc: "Sprints, rapid updates, and constant feedback loops." },
+                { step: "3", title: "Launch", desc: "Deployment, testing, and handover for scale." }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-4 md:gap-6 p-5 md:p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-colors">
-                  <span className="text-3xl md:text-4xl font-black text-slate-800 stroke-blue-500 opacity-50 shrink-0">{item.step}</span>
+                  <span className="text-3xl md:text-4xl font-bold text-white">{item.step}</span>
                   <div>
                     <h3 className="text-lg md:text-xl font-bold text-white">{item.title}</h3>
                     <p className="text-slate-400 text-sm mt-1">{item.desc}</p>
