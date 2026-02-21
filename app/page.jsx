@@ -3,17 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Rocket, Code, Layers, Zap, Activity, Cpu, Globe, CheckCircle } from 'lucide-react';
-import CookieBanner from './components/CookieBanner'; // We will create this component next
+import CookieBanner from './components/CookieBanner'; //need to add GA4 id for this to have functionality
 
 const QuantumIgnitionsSite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState('');
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -22,10 +17,43 @@ const QuantumIgnitionsSite = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  // Handle scroll effect for navbar background
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection Observer to highlight active navbar link
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50% 0px -50% 0px', 
+      threshold: 0,
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    navLinks.forEach((link) => {
+      const sectionId = link.href.substring(1); 
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [navLinks]);
+
   return (
     <div className="min-h-screen bg-[#020617] text-slate-50 font-sans selection:bg-cyan-500 selection:text-black overflow-x-hidden">
       
-      {/* --- COOKIE BANNER COMPONENT --- */}
       <CookieBanner />
 
       {/* --- BACKGROUND MESH --- */}
@@ -43,7 +71,7 @@ const QuantumIgnitionsSite = () => {
       {/* --- NAVBAR --- */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${scrolled || isMenuOpen ? 'bg-slate-900/80 backdrop-blur-xl border-white/10 py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => window.scrollTo(0,0)}>
+          <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => { window.scrollTo(0,0); setActiveSection(''); }}>
             <div className="relative">
               <div className="absolute inset-0 bg-blue-500 blur-lg opacity-0 group-hover:opacity-50 transition-opacity"></div>
               <img src="/logo.webp" alt="Logo" className="relative h-8 md:h-9 w-auto object-contain" />
@@ -54,11 +82,23 @@ const QuantumIgnitionsSite = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a 
+                  key={link.name} 
+                  href={link.href} 
+                  // UPDATED: Text Glow effect for active state and hover
+                  className={`px-4 py-2 text-sm transition-all duration-300 ${
+                    isActive 
+                      ? 'text-white-400 font-bold [text-shadow:0_0_15px_rgba(34,211,238,0.8)]' 
+                      : 'text-slate-300 font-medium hover:text-white-200 hover:[text-shadow:0_0_10px_rgba(34,211,238,0.5)]'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              );
+            })}
             <a href="#contact" className="ml-4 px-5 py-2.5 text-sm font-bold text-black bg-cyan-400 hover:bg-cyan-300 rounded-lg transition-all shadow-[0_0_15px_rgba(34,211,238,0.4)] hover:shadow-[0_0_25px_rgba(34,211,238,0.6)]">
               Start Project
             </a>
@@ -71,11 +111,24 @@ const QuantumIgnitionsSite = () => {
 
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-white/10 shadow-2xl transition-all duration-300 origin-top">
-             {navLinks.map((link) => (
-                <a key={link.name} href={link.href} onClick={() => setIsMenuOpen(false)} className="block px-8 py-4 text-left text-slate-300 hover:text-white hover:bg-white/5 text-lg font-medium border-b border-white/5">
-                  {link.name}
-                </a>
-              ))}
+             {navLinks.map((link) => {
+                const isActive = activeSection === link.href.substring(1);
+                return (
+                  <a 
+                    key={link.name} 
+                    href={link.href} 
+                    onClick={() => setIsMenuOpen(false)} 
+                    // UPDATED: Text Glow effect for Mobile Menu
+                    className={`block px-8 py-4 text-left text-lg border-b border-white/5 transition-all duration-300 ${
+                      isActive 
+                        ? 'text-cyan-400 font-bold [text-shadow:0_0_15px_rgba(34,211,238,0.8)]' 
+                        : 'text-slate-300 font-medium hover:text-cyan-200 hover:[text-shadow:0_0_10px_rgba(34,211,238,0.5)]'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
               <div className="p-4">
                 <a href="#contact" onClick={() => setIsMenuOpen(false)} className="block w-full px-4 py-4 text-center font-bold text-black bg-cyan-400 hover:bg-cyan-300 rounded-xl">
                   Start Project
@@ -89,7 +142,6 @@ const QuantumIgnitionsSite = () => {
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden min-h-[85dvh] flex flex-col justify-center">
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10 text-center">
           
-          {/* UPDATED: Badge Text */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest uppercase mb-6 md:mb-8 hover:bg-blue-500/20 transition-colors cursor-default">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
             igniting future tech
@@ -142,10 +194,10 @@ const QuantumIgnitionsSite = () => {
                    <div className="p-3 bg-blue-500/20 rounded-full text-blue-400"><Globe size={24} /></div>
                    <div>
                       <h4 className="text-white font-bold">Global Standards, UK Roots</h4>
-                      {/* <p className="text-slate-400 text-sm">London • Remote</p> */}
+                      <p className="text-slate-400 text-sm">London • Manchester • Remote</p>
                    </div>
                 </div>
-                <p className="text-xl font-light text-slate-300 italic">No matter your industry or idea, we provide the expertise and tools to turn it into a working MVP.</p>
+                <p className="text-xl font-light text-slate-300 italic">"No matter your industry or idea, we provide the expertise and tools to turn it into a working MVP."</p>
             </div>
           </div>
         </div>
@@ -161,9 +213,7 @@ const QuantumIgnitionsSite = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {[
-              // UPDATED: Desc text
               { icon: Rocket, title: "MVP Development", desc: "Validate core concepts in hours." },
-              // UPDATED: Desc text
               { icon: Globe, title: "Web Applications", desc: "High-performance solutions." },
               { icon: Layers, title: "UI/UX Design", desc: "Interfaces that feel magical to use." },
               { icon: Cpu, title: "AI Integration", desc: "Smart algorithms to power your business logic." },
@@ -219,7 +269,7 @@ const QuantumIgnitionsSite = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white">Let's Build Something Great</h2>
               <p className="text-slate-400 mt-2 text-sm md:text-base">Fill out the form and we'll get back to you within 24 hours.</p>
             </div>
-            <form action="https://formsubmit.co/dev1@quantumignitions.uk" method="POST" className="space-y-4 md:space-y-6">
+            <form action="https://formsubmit.co/manahilsupwork@gmail.com" method="POST" className="space-y-4 md:space-y-6">
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_subject" value="New Inquiry from Quantum Ignitions" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -242,14 +292,11 @@ const QuantumIgnitionsSite = () => {
              <img src="/logo.webp" alt="Logo" className="h-6 w-auto opacity-70 grayscale hover:grayscale-0 transition-all" />
           </div>
           
-          {/* UPDATED: Copyright & Address */}
           <p className="text-slate-400 text-sm mb-2">
             © 2026 Quantum Ignitions Ltd 
           </p>
           <p className="text-slate-500 text-xs">
-            Office Address: 167 - 169 Great Portland Street 05th Floor, Westminster
-London
-W1W5PF • Registered Number: 16968067
+            Office Address: [Your Registered Address] • Registered Number: [12345678]
           </p>
 
           <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">

@@ -37,6 +37,11 @@ export default function CookieBanner() {
     document.head.appendChild(inlineScript);
 
     console.log(`[Analytics] Google Analytics loaded with ID: ${GA_MEASUREMENT_ID}`);
+
+    if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
+      console.log('[Analytics] GA ID not configured.');
+      return;
+    }
   };
 
   useEffect(() => {
