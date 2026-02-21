@@ -219,7 +219,7 @@ const QuantumIgnitionsSite = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white">Let's Build Something Great</h2>
               <p className="text-slate-400 mt-2 text-sm md:text-base">Fill out the form and we'll get back to you within 24 hours.</p>
             </div>
-            <form action="https://formsubmit.co/manahilsupwork@gmail.com" method="POST" className="space-y-4 md:space-y-6">
+            <form action="https://formsubmit.co/dev1@quantumignitions.uk" method="POST" className="space-y-4 md:space-y-6">
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_subject" value="New Inquiry from Quantum Ignitions" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
